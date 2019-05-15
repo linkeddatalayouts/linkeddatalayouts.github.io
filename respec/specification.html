@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <title>LiDL Specification</title>
+    <script
+     src='https://www.w3.org/Tools/respec/respec-w3c-common'
+     class='remove'></script>
+    <script class='remove'>
+      var respecConfig = {
+        specStatus: "unofficial",
+        editors: [{
+          name: "Christian Vogelgesang",
+          company:"DFKI GmbH",
+          companyURL: "https://www.dfki.de/web/",
+        },
+        {
+          name: "René Schubotz",
+          company:"DFKI GmbH",
+          companyURL: "https://www.dfki.de/web/",
+        },
+        {
+          name: "Torsten Spieldenner",
+          company:"DFKI GmbH",
+          companyURL: "https://www.dfki.de/web/",
+        }],
+        github: "https://github.com/chrvog/LiDL",
+        shortName: "lidl"
+      };
+    </script>
+    <style type="text/css">
+      figure { text-align: center; }
+      img.graph { width: 66%; }
+      table td, table th { border: 1px solid #ddd; padding: 0.2em 0.5em; }
+      .linenum {color: grey}
+    </style>
+    <style>
+        pre {
+            tab-size: 3;
+            -moz-tab-size: 3;
+            /* Code for Firefox */
+            -o-tab-size: 3;
+            /* Code for Opera */
+        }
+
+        th {
+            text-align: left;
+        }
+
+        table.rule {
+            background-color: #EBEBE0;
+        }
+
+        table.rule td {
+            text-align: center;
+        }
+
+        td.up {
+            border-bottom: 1px solid black;
+        }
+
+        td {
+            vertical-align: top;
+        }
+
+        .algorithm {
+            background: #fafafc;
+            border-left-style: solid;
+            border-left-width: .5em;
+            border-color: #c0c0c0;
+            margin-bottom: 16px;
+            padding: 8px;
+        }
+
+        .arg {
+            font-weight: bold;
+            color: #000080;
+        }
+
+        .def {
+            background: #fcfcfc;
+            border-left-style: solid;
+            border-left-width: .5em;
+            border-color: #c0c0c0;
+            margin-bottom: 16px;
+        }
+
+        .def-sparql {}
+
+        .def-sparql-body {
+            margin-top: 0px;
+            margin-bottom: 0px;
+        }
+
+        .def-text {}
+
+        .def-text-body {}
+
+        .def-header {
+            color: #a0a0a0;
+            font-size: 16px;
+            padding-bottom: 8px;
+        }
+
+        .diagram-class {
+            border: 1px solid black;
+            border-radius: 4px;
+            width: 360px;
+        }
+
+        .diagram-class-name {
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .diagram-class-properties {
+            border-top: 1px solid black;
+        }
+
+        .diagram-class-properties-start {
+            padding: 8px;
+        }
+
+        .diagram-class-properties-section {
+            border-top: 1px dashed #808080;
+            padding: 8px;
+        }
+
+        .focus-node-selected {
+            color: blue;
+        }
+
+        .focus-node-error {
+            color: red;
+        }
+
+        .triple-can-be-skipped {
+            color: grey;
+        }
+
+        .focus-node-error {
+            color: red;
+        }
+
+        .target-can-be-skipped {
+            color: darkslategray;
+            font-style: italic;
+        }
+
+        .component-class {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .parameter-context {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .parameters {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .part-header {
+            font-weight: bold;
+        }
+
+        .syntax {
+            border-left-style: solid;
+            border-left-width: .5em;
+            border-color: #d0d0d0;
+            margin-bottom: 16px;
+            padding: .5em 1em;
+            background-color: #f6f6f6;
+        }
+
+        .syntax-rule-id {
+            padding-right: 10px;
+        }
+
+        .syntax-rule-id-a {
+            white-space: nowrap;
+        }
+
+        .validator-id-a {
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .term {
+            font-style: italic;
+        }
+
+        .term-def-header {
+            font-style: italic;
+            font-weight: bold;
+        }
+
+        .term-table {
+            border-collapse: collapse;
+            border-color: #000000;
+            margin: 16px;
+        }
+
+        .term-table td,
+        th {
+            border-width: 1px;
+            border-style: solid;
+            padding: 5px;
+        }
+
+        .todo {
+            color: red;
+        }
+
+        pre {
+            word-wrap: normal;
+        }
+        /* example pre taken / adapted from R2RML */
+
+        pre.shapes,
+        pre.lidl-vocab,
+        pre.example-layout,
+        pre.example-results,
+        pre.example-other {
+            margin-left: 0;
+            padding: 0 2em;
+            margin-top: 1.5em;
+            padding: 1em;
+        }
+
+        pre.lidl-vocab:before,
+        pre.example-layout:before,
+        pre.example-results:before,
+        pre.example-other:before {
+            background: white;
+            display: block;
+            font-family: sans-serif;
+            margin: -1em 0 0.4em -1em;
+            padding: 0.2em 1em;
+        }
+
+        pre.shapes,
+        pre.lidl-vocab {
+            background: #deb;
+        }
+
+        pre.shapes,
+        pre.lidl-vocab,
+        pre.lidl-vocab:before {
+            border: 1px solid #bbb;
+        }
+
+        pre.lidl-vocab:before {
+            color: #888;
+            content: "LiDL vocabulary";
+            width: 10em;
+        }
+
+        pre.example-layout {
+            background: #eeb;
+        }
+
+        pre.example-layout,
+        pre.example-layout:before {
+            border: 1px solid #cc9;
+        }
+
+        pre.example-layout:before {
+            color: #996;
+            content: "Example Layout";
+            width: 10em;
+        }
+
+        .example-results {
+            background: #edb;
+        }
+
+        .example-results,
+        .example-results:before,
+        .example-results th,
+        .example-results td {
+            border: 1px solid #cca;
+        }
+
+        pre.example-results:before {
+            color: #997;
+            content: "Example lifting results";
+            width: 10em;
+        }
+
+        pre.example-other {
+            background: #bed;
+        }
+
+        pre.example-other,
+        pre.example-other:before {
+            border: 1px solid #ddd;
+        }
+
+        pre.example-other:before {
+            color: #888;
+            content: "Example";
+            width: 10em;
+        }
+        /* our syntax menu for switching */
+
+        div.syntaxmenu {
+            border: 1px dotted black;
+            padding: 0.5em;
+            margin: 1em;
+        }
+
+        @media print {
+            div.syntaxmenu {
+                display: none;
+            }
+        }
+    </style>
+  </head>
+  <body>
+    <section id='abstract'>
+      <p>
+        This is required.
+      </p>
+    </section>
+    <section id='sotd'>
+      <p>
+        This is required.
+      </p>
+    </section>
+    <section>
+      <h2>Introduction</h2>
+      This document specifies LiDL (Linked Data Layouts), a language for describing the layout of binary resources and for defining the lifting to a RDF representation of this resource.
+      <section>
+        <h2>Document Conventions</h2>
+        Within this document, the following namespace prefix bindings are used:
+        <table>
+          <tr>
+            <th>Prefix</th>
+            <th>Namespace</th>
+          </tr>
+          <tr>
+            <td>rdf:</td>
+            <td>http://www.w3.org/1999/02/22-rdf-syntax-ns#</td>
+          </tr>
+          <tr>
+            <td>rdfs:</td>
+            <td>http://www.w3.org/2000/01/rdf-schema#</td>
+          </tr>
+          <tr>
+            <td>sh:</td>
+            <td>http://www.w3.org/ns/shacl#</td>
+          </tr>
+          <tr>
+            <td>xsd:</td>
+            <td>http://www.w3.org/2001/XMLSchema#</td>
+          </tr>
+          <tr>
+            <td>lidl:</td>
+            <td>http://www.dfki.de/lidl#</td>
+          </tr>
+          <tr>
+            <td>dt:</td>
+            <td>http://www.dfki.de/lidl/datatypes#</td>
+          </tr>
+          <tr>
+            <td>expr:</td>
+            <td>http://www.dfki.de/lidl/expressions#</td>
+          </tr>
+        </table>
+        Note that the URI of the graph defining the LiDL, Datatype and Expression vocabulary themselves are equivalent to the namespace above, i.e. it includes the #. References to vocabularies, e.g. via owl:imports should include the #.
+
+        Throughout the document, color-coded boxes containing RDF graphs in Turtle will appear. These fragments of Turtle documents use the prefix bindings given above.
+
+        <pre class="lidl-vocab"># This box represents an lidl vocabulary graph</pre>
+        <pre class="example-layout"># This box represents a LiDL layout graph.</pre>
+        <pre class="example-results"># This box represents a mapped resource.</pre>
+      </section>
+
+    </section>
+    <section>
+      <h2>Layouts</h2>
+      TODO class diagram
+      Layouts are the basic data structure in LiDL. In general, they provide an interpretation context for the enclosed description. Two types of Layouts are available: Atomic Layouts that describe any kind of atomic values, and Composite Layouts that structure one or more attributes.
+
+      <section>
+        <h2>Interpretation Context</h2>
+          Any interpreter for binary data relies on a certain context, that is used during the data interpretion. Layouts inherits the context to their attributes which can overwrite it.
+          LiDL supports the definition of the Endianness in the interpretation context.
+          <section>
+            <h2>Endianness</h2>
+            Endianess is the order in which bytes are arranged in memory. To interprete binary data, the used endianess has to be known. Some formats require different endianess definitions for certain parts of the resource.
+            <pre class="lidl-vocab">
+lidl:Endianess a rdfs:Class .
+lidl:LittleEndian a lidl:Endianess .
+lidl:BigEndian a lidl:Endianess .
+
+lidl:Layout
+  a rdfs:Class , sh:NodeShape ;
+  rdfs:subClassOf sh:NodeShape ;
+  sh:property [
+    sh:description "Each layout MAY specify its endianess" ;
+    sh:path lidl:endianess ;
+    sh:maxCount 1 ;
+    sh:in ( lidl:BigEndian lidl:LittleEndian )
+  ] .</pre>
+            <pre class="example-layout">&lt;ex:layout&gt; a lidl:layout;
+            lidl:endianess lidl:LittleEndian .</pre>
+          </section>
+      </section>
+      <section>
+        <h2>Atomic Layouts</h2>
+          Atomic Layouts describe any kind of values that are used in the format description. The minimal requirement for an Atomic Layout is the definition of it's size in either bytes or bits, to allow an computation of memory addresses in composite layouts.
+          <section>
+            <h2>lidl:bitSize</h2>
+            The bit size of the value in memory. Either this or lidl:byteSize MUST be defined.
+          </section>
+          <section>
+            <h2>lidl:byteSize</h2>
+            The byte size of the value in memory. Either this or lidl:bitSize MUST be defined.
+          </section>
+          <section>
+            <h2>lidl:datatype</h2>
+            lidl:datatype refers to a RDF datatype that is used to represent the value in the lifted resource description. If a datatype is not provided or the datatype is unknown to the interpreter, the raw data is automatically resourcified
+          </section>
+          <section>
+            <h2>lidl:value</h2>
+              Can be used to define constants in the layout either by literals with the according RDF/XSD datatype or by RDF literals of type xsd:hexBinary.
+          </section>
+
+          <section>
+            <h2>Predefined Atomic Classes/Datatypes</h2>
+              LiDL provides a number of predefined Atomic Classes in "Datatype" vocabulary. They represent the datatypes that MUST be natively supported by interpreters.
+
+
+              <table>
+                <tr>
+                  <th>Datatype</th>
+                  <th>XSD Datatype</th>
+                  <th>ByteSize</th>
+                  <th>Description</th>
+                </tr>
+                <tr>
+                  <td>BitBoolean</td>
+                  <td>xsd:boolean</td>
+                  <td>1 (lidl:bitSize)</td>
+                  <td>A single bit representing a boolean value</td>
+                </tr>
+                <tr>
+                  <td>datatype:ByteBoolean</td>
+                  <td>xsd:boolean</td>
+                  <td>1 </td>
+                  <td>A byte representing a boolean value.  <br />True if not equal 0, False otherwise.</td>
+                </tr>
+                <tr>
+                  <td>datatype:UInt08</td>
+                  <td>xsd:unsignedByte</td>
+                  <td>1</td>
+                  <td>8 bit unsigned integer</td>
+                </tr>
+                <tr>
+                  <td>datatype:Int8</td>
+                  <td>xsd:byte</td>
+                  <td>1</td>
+                  <td>8 bit signed integer</td>
+                </tr>
+                <tr>
+                  <td>datatype:UInt16</td>
+                  <td>xsd:unsignedShort</td>
+                  <td>2</td>
+                  <td>16 bit unsigned integer</td>
+                </tr>
+                <tr>
+                  <td>datatype:Int16</td>
+                  <td>xsd:short</td>
+                  <td>2</td>
+                  <td>16 bit signed integer</td>
+                </tr>
+                <tr>
+                  <td>datatype:UInt32</td>
+                  <td>xsd:unsignedInt</td>
+                  <td>4</td>
+                  <td>32 bit unsigned integer</td>
+                </tr>
+                <tr>
+                  <td>datatype:Int32</td>
+                  <td>xsd:int</td>
+                  <td>4</td>
+                  <td>32 bit signed integer</td>
+                </tr>
+                <tr>
+                  <td>datatype:UInt64</td>
+                  <td>xsd:unsignedLong</td>
+                  <td>8</td>
+                  <td>64 bit unsigned integer</td>
+                </tr>
+                <tr>
+                  <td>datatype:Int64</td>
+                  <td>xsd:long</td>
+                  <td>8</td>
+                  <td>64 bit signed integer</td>
+                </tr>
+                <tr>
+                  <td>datatype:Float32</td>
+                  <td>xsd:float</td>
+                  <td>4</td>
+                  <td>32 bit IEEE_754 floating point</td>
+                </tr>
+                <tr>
+                  <td>datatype:Float64</td>
+                  <td>xsd:double</td>
+                  <td>8</td>
+                  <td>64 bit IEEE_754 floating point</td>
+                </tr>
+                <tr>
+                  <td>datatype:String</td>
+                  <td>xsd:string</td>
+                  <td><i>dynamic</i></td>
+                  <td>A string with a specified encoding.  <br />See section <a href='#String'>Strings</a>.</td>
+                </tr>
+              </table>
+              <section>
+                <h2>Strings</h2>
+                A Strings is a sequence of characters. The semantics of the character and used datatype are defined by the <i>encoding</i> of the string. The length of a String value is typically defined by a string length or by a special delimiter character at the of the string.
+              <font color="red">TBD! this is essentially a special composite layout. Sometimes a heterogeneous array (UTF-8) but mostly a homogeneous array (everything else)</font>
+                <section>
+                  <h2>lidl:delimiter</h2>
+                    A special character that is used to terminate the string value. If neither the lidl:elementCount nor a delimiter is definied, the interpreter MUST assume a NULL-terminated string. Cannot be combined with lidl:elementCount.
+                </section>
+                <section>
+                  <h2>lidl:elementCount</h2>
+                  The number of characters in the string value. Cannot be combined with lidl:delimiter.
+                </section>
+                <section>
+                  <h2>StringEncoding</h2>
+                    The encoding of the string.
+                    LiDL interpreter MUST support datatype:ASCII, datatype:UTF-8, datatype:UTF-16 and datatype:UTF-32.
+                </section>
+            </section>
+      </section>
+
+    </section>
+    <section>
+      <h2>Composite Layouts</h2>
+      Composite Layouts group a list of attributes together. In contrary to Atomic Layouts, they do represent a semantic structure in the binary resource or the lifted RDF and not concrete values.
+      <section>
+        <h2>lidl:attribute</h2>
+          A Composite Layout MUST define at least one contained attribute.
+      </section>
+    </section>
+    <section>
+      <h2>Attributes</h2>
+      An <i>Attributes</i> attaches <i>Layouts</i> to <i>CompositeLayoutes</i>. They describe how structures in the binary resource are arranged and how they will be lifted to RDF.
+      <section>
+        <h2>lidl:elementShape</h2>
+        Attributes provide one or more <i>Layout</i>, linked with <i>lidl:elementShape</i>, that describe the structure of contained elements.
+        All linked <i>Layouts</i> are matched against the given binary data. If a <i>Layout</i> does not match due to constants, it's discarded.
+
+      <section>
+        <h2>Memory Address Computation</h2>
+          As one of the main purposes of attributes is the description of structures that are lifted from the binary resource to RDF, they have to provide enough information to compute the location the in binary resource.
+
+          <section>
+            <h2>lidl:order</h2>
+            Attributes of a <i>Composite Layout</i> can provide a unique order. For these attributes, the interpreter assumes that they are sequentially arranged in the memory relative to the <i>Composite Layout</i> and calculates the memory address implicitly starting with a byte offset of 0 for the attribute with the lowest <i>lidl:order</i>.
+          </section>
+          <section>
+            <h2>lidl:memoryAddress</h2>
+              <font color="red">TODO! bit/byteoffset and the reference layout</font>
+          </section>
+<br><br>
+
+          If none of these is provided by the <i>Attribute</i>, the <i>Attribute</i> has to represent either a constant <i>Atomic Layout</i> with a defined <i>lidl:value</i>, or the memory address of linked the layout must be uniquely calculable relative to the enclosing layout of the <i>Attribute</i>.
+<br>
+          <font color="red">TBD! a linked layout is maybe used to describe the elements in an array. how do we handle the ambiguity? </font>
+<br>
+          <font color="red">TODO! Diagram</font>
+      </section>
+      <section>
+        <h2>Lifted RDF representation</h2>
+        The second purpose of an <i>Attribute</i> is to describe how <i>Layouts</i> are lifted to RDF.
+        <section>
+          <h2>lidl:predicate</h2>
+            Each <i>Attribute</i> CAN provide a RDF property that is used to link the lifted elements to the lifted <i>Layout</i>.
+        </section>
+        <section>
+          <h2>lidl:condition</h2>
+          Each <i>Attribute</i> CAN provide a condition describe by a boolean literal or expression that must be fulfilled to create a lifting of the <i>Attribute</i>.
+        </section>
+        <section>
+          <h2>lidl:resourcifyRawData</h2>
+          A boolean flag that enables the creation of an endpoint the memory slice that represents the attribute.
+        </section>
+      </section>
+      <section>
+        <h2>Array</h2>
+        An <i>Array</i> is an ordered list of elements. Attributes can specify the length of an <i>Array</i> by specifying the number of contained elements or by defining a delimiter that represents the end of the array in the memory.
+        <section>
+          <h2>lidl:elementCount</h2>
+          The number of elements in the array either described as a RDF literal of type xsd:int or by <i>Expression</i> of this type. The <i>Attribute</i> MUST define either the element count or a delimiter.
+        </section>
+        <section>
+          <h2>lidl:delimiter</h2>
+          A value that is used to represent the end of the <i>Array</i>. The value is define by a RDF literal or by an expression.
+        </section>
+        <section>
+          <h2>lidl:forceRecursion</h2>.
+          <font color="red">TBD!</font>
+        </section>
+      </section>
+  </section>
+
+
+    </section>
+    <section>
+      <h2>Expressions</h2>
+      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
+      <section>
+        <h2>Operators</h2>
+        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+        <section>
+          <h2>Predefined Operators</h2>
+          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
+          <table>
+            <tr>
+              <th>Operator</th>
+              <th>Argument Datatypes</th>
+              <th>Number of Arguments</th>
+              <th>Result Datatype</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>add</td>
+              <td>IntegerX/FloatX</td>
+              <td>2+</td>
+              <td>Same as Arguments</td>
+              <td>Arg<sub>1</sub> + Arg<sub>2</sub> + ... + Arg<sub>n</sub></td>
+            </tr>
+            <tr>
+              <td>sub</td>
+              <td>IntegerX/FloatX</td>
+              <td>2</td>
+              <td>Same as Arguments</td>
+              <td>Arg<sub>1</sub> - Arg<sub>2</sub></td>
+            </tr>
+            <tr>
+              <td>mul</td>
+              <td>IntegerX/FloatX</td>
+              <td>2+</td>
+              <td>Same as Arguments</td>
+              <td>Arg<sub>1</sub> * Arg<sub>2</sub> * ... * Arg<sub>n</sub></td>
+            </tr>
+            <tr>
+              <td>div</td>
+              <td>IntegerX/FloatX</td>
+              <td>2</td>
+              <td>Same as Arguments</td>
+              <td>Arg<sub>1</sub> / Arg<sub>2</sub></td>
+            </tr>
+            <tr>
+              <td>gr</td>
+              <td>IntegerX/FloatX</td>
+              <td>2</td>
+              <td>Boolean</td>
+              <td>Arg<sub>1</sub> > Arg<sub>2</sub></td>
+            </tr>
+            <tr>
+              <td>gre</td>
+              <td>IntegerX/FloatX</td>
+              <td>2</td>
+              <td>Boolean</td>
+              <td>Arg<sub>1</sub> >= Arg<sub>2</sub></td>
+            </tr>
+            <tr>
+              <td>eq</td>
+              <td>IntegerX/FloatX</td>
+              <td>2</td>
+              <td>Boolean</td>
+              <td>Arg<sub>1</sub> == Arg<sub>2</sub></td>
+            </tr>
+            <tr>
+              <td>sm</td>
+              <td>IntegerX/FloatX</td>
+              <td>2</td>
+              <td>Boolean</td>
+              <td>Arg<sub>1</sub> < Arg<sub>2</sub></td>
+            </tr>
+            <tr>
+              <td>sme</td>
+              <td>IntegerX/FloatX</td>
+              <td>2</td>
+              <td>Boolean</td>
+              <td>Arg<sub>1</sub> <= Arg<sub>2</sub></td>
+            </tr>
+          </table>
+          </section>
+        </section>
+      <section>
+      <h2>lidl:ArgumentList</h2>
+      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+      </section>
+    </section>
+
+  </body>
+</html>
