@@ -1,0 +1,16 @@
+main:
+  - title: "Start"
+    url: /docs/quick-start-guide/
+    description: "Home"
+  - title: "Examples"       
+    url: /examples/
+    description: "Examples"
+  - title: "Vocabularies"       
+    url: https://github.com/linkeddatalayouts/vocabularies
+    description: "Vocabularies"
+  - title: "Specification"       
+    url: /specification/
+    description: "Specification"
+  - title: "Publications"       
+    url: /publications/
+    description: "Publications"
