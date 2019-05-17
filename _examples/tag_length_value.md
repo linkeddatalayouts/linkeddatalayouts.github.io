@@ -37,7 +37,7 @@ tlv:Chunk
   lidl:attribute tlv:Tag, tlv:Length , tlv:Value .
 ```
 
-In this example, we encode the value kind using a single byte and the value size using four bytes.
+In this example, we encode the value kind using a single byte.
 
 ```
 @prefix lidl:   <http://www.dfki.org/lidl#> .
@@ -47,12 +47,25 @@ tlv:Tag
   lidl:order 0;
   lidl:count 1 ;
   lidl:layout lidl:Byte .
-  
+
+
+In this example, we encode the value size using four bytes.
+
+```
+@prefix lidl:   <http://www.dfki.org/lidl#> .
+@prefix tlv: <http://tlv.example.com/ns#> .
 tlv:Length
   lidl:order 1;
   lidl:count 1 ;
   lidl:layout lidl:Integer32 .
-  
+```  
+
+For brevity, the `tlv:Value` is simply a byte sequence of given length.
+
+```
+@prefix lidl:   <http://www.dfki.org/lidl#> .
+@prefix tlv: <http://tlv.example.com/ns#> . 
+
 tlv:Value
   lidl:order 2;
   lidl:count tlv:Length ;
