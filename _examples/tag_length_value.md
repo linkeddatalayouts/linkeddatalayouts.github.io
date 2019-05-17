@@ -49,6 +49,6 @@ _:length
   
 _:value
   lidl:order 2;
-  lidl:count _:length ;
+  lidl:count [ lidl:eval ( _:length ) ] ;
   lidl:layout lidl:Byte . 
 ```
