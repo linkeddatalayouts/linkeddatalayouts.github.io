@@ -1,10 +1,8 @@
 ---
-title: "Examples"
+title: "PPM - Netpbm color image format"
 layout: single
 author_profile: false
 ---
-
-# PPM - Netpbm color image format
 
 The basic layout of a PPM files is divided into a Header section and a ImageData section.
  
@@ -27,7 +25,7 @@ ppm:ImageData .
   lidl:layout ppm:ImageDataLayout .
 ```
 
-## PPM Header 
+# PPM Header 
 The Header starts with a two-byte magic number (in ASCII) that identifies the type of file it is and its encoding (ASCII or binary). 
 In this example, we use "P6" to indicate the use of the binary PPM format. 
 
@@ -64,7 +62,7 @@ ppm:MaxColorValue
   lidl:layout lidl:UInt8 .
 ```
 
-## PPM Image Data
+# PPM Image Data
 
 The ImageData section contains the actual picture information as a series of RGB values. 
 
