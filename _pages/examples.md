@@ -1,7 +1,8 @@
 ---
-layout: single
-title: "A list of LiDL examples"
+title: "Practical LiDL examples"
 permalink: "/examples/"
+layout: single
+author_profile: false
 ---
 
 {% for example in site.examples %}

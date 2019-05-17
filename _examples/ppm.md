@@ -20,7 +20,7 @@ ppm:Header
     lidl:layout ppm:HeaderLayout .
 
 ppm:ImageData .
-  lidl:order 0;
+  lidl:order 1;
   lidl:count 1 ;
   lidl:layout ppm:ImageDataLayout .
 ```
