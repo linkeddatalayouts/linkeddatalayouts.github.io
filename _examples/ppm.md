@@ -4,6 +4,10 @@ layout: single
 author_profile: false
 ---
 
+The PPM, or Portable Pixmap, format was devised to be an intermediate format for use in developing file format conversion systems.
+The PPM format is not intended to be an archival format, so it does not need to be too storage efficient. 
+Thus, it is one of the simplest formats. 
+
 [Find this example on GitHub!](https://github.com/linkeddatalayouts/vocabularies/tree/master/examples/ppm)
 
 ## Defining the PPM layout
