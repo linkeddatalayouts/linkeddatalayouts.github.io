@@ -6,6 +6,8 @@ author_profile: false
 
 TLV (type-length-value or tag-length-value) is an encoding scheme used for optional information element in a certain protocol.
 
+[Find this example on GitHub!](https://github.com/linkeddatalayouts/vocabularies/tree/master/examples/TLV)
+
 ## TLV Sequences
 
 Each TLV representation is a finite `tlv:Sequence` of arbitrary length consisting of `tlv:Chunk`s.
