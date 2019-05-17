@@ -117,6 +117,9 @@ tag_archive:
   path: /tags/
 
 
+collections:
+  examples:
+    output: true
 
 github: [metadata] 
 encoding: UTF-8 
