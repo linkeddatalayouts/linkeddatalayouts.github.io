@@ -1,5 +1,4 @@
 ---
-permalink: /examples/
 title: "Examples"
 layout: single
 author_profile: false
@@ -30,14 +29,16 @@ ppm:ImageData .
 
 ## PPM Header 
 The Header starts with a two-byte magic number (in ASCII) that identifies the type of file it is and its encoding (ASCII or binary). 
-
-The magic number is a capital P followed by a single-digit number. In this example, we use "P6" to indicate the use of the binary PPM format. 
+In this example, we use "P6" to indicate the use of the binary PPM format. 
 
 The next two Header elements give the image width and the image height.
 
 The final Header element specifies the maximum value for each color.
 
 ```
+@prefix lidl: <http://www.dfki.org/lidl#> .
+@prefix ppm:    <http://ppm.example.com/ns#> .
+
 ppm:HeaderLayout
   lidl:attribute ppm:Magic , ppm:Width , ppm:Height , ppm:MaxColorValue .
 
@@ -61,4 +62,29 @@ ppm:MaxColorValue
   lidl:order 3 ; 
   lidl:count 1 ;
   lidl:layout lidl:UInt8 .
+```
+
+## PPM Image Data
+
+The ImageData section contains the actual picture information as a series of RGB values. 
+
+In the PPM format, each pixel is defined by a triplet of values representing how much red, green, and blue (RGB) are present. 
+
+```
+@prefix lidl: <http://www.dfki.org/lidl#> .
+@prefix ppm:	<http://ppm.example.com/ns#> .
+
+ppm:ImageDataLayout
+  lidl:attribute [
+      lidl:order 0 ;
+      lidl:count [ lidl:mul ( _:width _:height ) ] ;
+      lidl:layout ppm:Pixel 
+  ] .
+
+ppm:Pixel
+  lidl:attribute [
+    lidl:order 0;
+    lidl:count 3 ;
+    lidl:layout lidl:UInt8  
+  ] .
 ```
