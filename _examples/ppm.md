@@ -4,6 +4,8 @@ layout: single
 author_profile: false
 ---
 
+## Defining the PPM layout
+ 
 The basic layout of a PPM files is divided into a Header section and a ImageData section.
  
 ```
@@ -25,7 +27,7 @@ ppm:ImageData .
   lidl:layout ppm:ImageDataLayout .
 ```
 
-# PPM Header 
+### PPM Header 
 The Header starts with a two-byte magic number (in ASCII) that identifies the type of file it is and its encoding (ASCII or binary). 
 In this example, we use "P6" to indicate the use of the binary PPM format. 
 
@@ -62,7 +64,7 @@ ppm:MaxColorValue
   lidl:layout lidl:UInt8 .
 ```
 
-# PPM Image Data
+### PPM Image Data
 
 The ImageData section contains the actual picture information as a series of RGB values. 
 
@@ -88,3 +90,69 @@ ppm:Pixel
 ```
 
 Please note that the actual number of pixels is defined using a `lidl:Expression`.
+
+
+## From PPM files to RDF graphs
+
+### The Mapping definition
+
+```
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix ppm:  <http://ppm.example.com/ns#> .
+@prefix img: <http://img.example.com/ns#> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix exif: <http://www.w3.org/2003/12/exif/ns> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ex: <https://github.com/linkeddatalayouts/vocabularies/blob/master/examples/ppm/> .
+
+<>
+  rml:logicalSource [ 
+    rml:source ex:rocket.ppm ; 
+    rml:referenceFormulation ppm:ImageLayout ] ;
+  rr:subjectMap [ 
+    rr:termType rr:IRI ; 
+    rr:class foaf:Image 
+  ] ;
+  rr:predicateObjectMap [ 
+    rr:predicate exif:width ; 
+    rr:objectMap [ rml:reference ppm:Width ] 
+  ] ;
+  rr:predicateObjectMap [ 
+    rr:predicate exif:height ; 
+    rr:objectMap [ rml:reference ppm:Height ] 
+  ] ;
+  rr:predicateObjectMap [ 
+    rr:predicate img:pixels ; 
+    rr:objectMap [ rml:reference ppm:ImageData ] 
+  ] .
+```
+
+### The resulting RDF graph
+
+```
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ppm:  <http://ppm.example.com/ns#> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix exif: <http://www.w3.org/2003/12/exif/ns> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ex: <https://github.com/linkeddatalayouts/vocabularies/blob/master/examples/ppm/> .
+
+<>
+  a foaf:Image ;
+  rdfs:isDefinedBy ppm:ImageLayout ;
+  owl:sameAs ex:rocket.ppm ;
+  exif:width "640"^^xsd:int ;
+  exif:height "427"^^xsd:int ;
+  img:pixels [
+    a dcat:Distribution ;
+    rdfs:isDefinedBy ppm:ImageDataLayout ;
+    dcat:downloadURL ex:rocket.bin ;
+    dct:format "application/octet-stream" ;
+    dcat:byteSize 819840 
+  ] .
+```
