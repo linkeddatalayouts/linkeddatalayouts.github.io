@@ -4,6 +4,8 @@ layout: single
 author_profile: false
 ---
 
+[Find this example on GitHub!](https://github.com/linkeddatalayouts/vocabularies/tree/master/examples/ppm)
+
 ## Defining the PPM layout
  
 The basic layout of a PPM files is divided into a Header section and a ImageData section.
