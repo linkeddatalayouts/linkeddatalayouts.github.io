@@ -5,9 +5,9 @@ layout: single
 author_profile: false
 ---
 
-# PPM - Netpbm color image format
+## PPM - Netpbm color image format
 
-The basic layout of a PPM files is divided into a Header section and a ImageData section.
+The basic layout of a PPM files is divided into a Header and an ImageData section.
  
 ```
 @prefix lidl: <http://www.dfki.org/lidl#> .
@@ -28,10 +28,10 @@ ppm:ImageData .
   lidl:layout ppm:ImageDataLayout .
 ```
 
-## PPM Header 
-The Header starts with a two-byte magic number (in ASCII) that identifies the type of file it is and its encoding (ASCII or binary). 
+### PPM Header 
 
-The magic number is a capital P followed by a single-digit number. In this example, we use "P6" to indicate the use of the binary PPM format. 
+The Header starts with a two-byte magic number (in ASCII) that identifies the type of file it is and its encoding (ASCII or binary). 
+In this example, we use "P6" to indicate the use of the binary PPM format. 
 
 The next two Header elements give the image width and the image height.
 
@@ -64,4 +64,28 @@ ppm:MaxColorValue
   lidl:order 3 ; 
   lidl:count 1 ;
   lidl:layout lidl:UInt8 .
+```
+
+### PPM Image Data
+
+The actual picture information is a series of RGB values. In the PPM format, each pixel is defined by a triplet of values representing how much red, green, and blue (RGB) are present. 
+
+```
+@prefix lidl: <http://www.dfki.org/lidl#> .
+@prefix ppm:	<http://ppm.example.com/ns#> .
+
+ppm:ImageDataLayout
+  lidl:attribute [
+      lidl:order 0 ;
+      lidl:count [ lidl:mul ( _:width _:height ) ] ;
+      lidl:layout ppm:Pixel 
+  ] .
+
+ppm:Pixel
+  lidl:attribute [
+    lidl:order 0;
+    lidl:count 3 ;
+    lidl:layout lidl:UInt8  
+  ] .
+
 ```
