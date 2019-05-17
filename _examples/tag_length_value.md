@@ -8,7 +8,7 @@ TLV (type-length-value or tag-length-value) is an encoding scheme used for optio
 
 ## TLV Sequences
 
-Each TLV representation is a finite `tlv:Sequence` consisting of `tlv:Chunk`s.
+Each TLV representation is a finite `tlv:Sequence` of arbitrary length consisting of `tlv:Chunk`s.
 
 ```
 @prefix lidl:   <http://www.dfki.org/lidl#> .
@@ -35,19 +35,26 @@ In addition, each `tlv:Chunk` contains a value of variable size.
 
 tlv:Chunk
   lidl:attribute tlv:Tag, tlv:Length , tlv:Value .
-  
+```
+
+In this example, we encode the value kind using a single byte and the value size using four bytes.
+
+```
+@prefix lidl:   <http://www.dfki.org/lidl#> .
+@prefix tlv: <http://tlv.example.com/ns#> .
+
 tlv:Tag
   lidl:order 0;
-  lidl:elementCount 1 ;
+  lidl:count 1 ;
   lidl:layout lidl:Byte .
   
 tlv:Length
   lidl:order 1;
-  lidl:elementCount 1 ;
+  lidl:count 1 ;
   lidl:layout lidl:Integer32 .
   
 tlv:Value
   lidl:order 2;
-  lidl:elementCount tlv:Length ;
+  lidl:count tlv:Length ;
   lidl:layout lidl:Byte .
 ```
