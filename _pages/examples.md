@@ -42,7 +42,10 @@ The final Header element specifies the maximum value for each color.
 @prefix ppm:	<http://ppm.example.com/ns#> .
 
 ppm:HeaderLayout
-  lidl:attribute ppm:Magic , ppm:Width , ppm:Height , ppm:MaxColorValue .
+  lidl:attribute ppm:Magic ;
+  lidl:attribute ppm:Width ;
+  lidl:attribute ppm:Height ;
+  lidl:attribute ppm:MaxColorValue .
 
 ppm:Magic
   lidl:order 0 ;
