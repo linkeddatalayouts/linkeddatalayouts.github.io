@@ -1,6 +1,6 @@
 main:
   - title: "Start"
-    url: /docs/quick-start-guide/
+    url: /
     description: "Home"
   - title: "Examples"       
     url: /examples/
