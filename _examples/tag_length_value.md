@@ -47,6 +47,7 @@ tlv:Tag
   lidl:order 0;
   lidl:count 1 ;
   lidl:layout lidl:Byte .
+```
 
 
 In this example, we encode the value size using four bytes.
