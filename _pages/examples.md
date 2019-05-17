@@ -38,6 +38,9 @@ The next two Header elements give the image width and the image height.
 The final Header element specifies the maximum value for each color.
 
 ```
+@prefix lidl: <http://www.dfki.org/lidl#> .
+@prefix ppm:	<http://ppm.example.com/ns#> .
+
 ppm:HeaderLayout
   lidl:attribute ppm:Magic , ppm:Width , ppm:Height , ppm:MaxColorValue .
 
