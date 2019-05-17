@@ -23,11 +23,10 @@ tlv:Sequence
 
 ## TLV Chunks
 
-Each `tlv:Chunk` indicates 
+Each `tlv:Chunk` consists of  
 - the kind of value that this part of the message represents (binary code, often simply alphanumeric), 
-- the length of the contained value (typically in bytes) .
-
-In addition, each `tlv:Chunk` contains a value of variable size.
+- the length of the contained value (typically in bytes),
+- a value of variable size.
  
 ```
 @prefix lidl:   <http://www.dfki.org/lidl#> .
@@ -37,7 +36,9 @@ tlv:Chunk
   lidl:attribute tlv:Tag, tlv:Length , tlv:Value .
 ```
 
-In this example, we encode the value kind using a single byte.
+## TLV Tags
+
+In this example, we encode a `tlv:Tag` using a single byte.
 
 ```
 @prefix lidl:   <http://www.dfki.org/lidl#> .
@@ -49,8 +50,9 @@ tlv:Tag
   lidl:layout lidl:Byte .
 ```
 
+## TLV Length
 
-In this example, we encode the value size using four bytes.
+For encoding a `tlv:Length`, we choose four bytes.
 
 ```
 @prefix lidl:   <http://www.dfki.org/lidl#> .
@@ -61,7 +63,9 @@ tlv:Length
   lidl:layout lidl:Integer32 .
 ```  
 
-For brevity, the `tlv:Value` is simply a byte sequence of given length.
+## TLV Value 
+
+For brevity, a `tlv:Value` is simply a byte sequence of given length.
 
 ```
 @prefix lidl:   <http://www.dfki.org/lidl#> .
