@@ -35,46 +35,20 @@ Each `tlv:Chunk` consists of
 @prefix tlv: <http://tlv.example.com/ns#> .
 
 tlv:Chunk
-  lidl:attribute tlv:Tag, tlv:Length , tlv:Value .
-```
-
-## TLV Tags
-
-In this example, we encode a `tlv:Tag` using a single byte.
-
-```
-@prefix lidl:   <http://www.dfki.org/lidl#> .
-@prefix tlv: <http://tlv.example.com/ns#> .
-
-tlv:Tag
+  lidl:attribute _:tag , _:length , _:value .
+  
+_:tag
   lidl:order 0;
   lidl:count 1 ;
   lidl:layout lidl:Byte .
-```
-
-## TLV Length
-
-For encoding a `tlv:Length`, we choose four bytes.
-
-```
-@prefix lidl:   <http://www.dfki.org/lidl#> .
-@prefix tlv: <http://tlv.example.com/ns#> .
-tlv:Length
+  
+_:length
   lidl:order 1;
   lidl:count 1 ;
   lidl:layout lidl:Integer32 .
-```  
-
-## TLV Value 
-
-For brevity, a `tlv:Value` is simply a byte sequence of given length.
-
-```
-@prefix lidl:   <http://www.dfki.org/lidl#> .
-@prefix tlv: <http://tlv.example.com/ns#> . 
-
-tlv:Value
+  
+_:value
   lidl:order 2;
-  lidl:count tlv:Length ;
-  lidl:layout lidl:Byte .
+  lidl:count _:length ;
+  lidl:layout lidl:Byte . 
 ```
