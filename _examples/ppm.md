@@ -75,7 +75,7 @@ In the PPM format, each pixel is defined by a triplet of values representing how
 ppm:ImageDataLayout
   lidl:attribute [
       lidl:order 0 ;
-      lidl:count [ lidl:mul ( _:width _:height ) ] ;
+      lidl:count [ lidl:mul ( ppm:Width ppm:Height ) ] ;
       lidl:layout ppm:Pixel 
   ] .
 
@@ -86,3 +86,5 @@ ppm:Pixel
     lidl:layout lidl:UInt8  
   ] .
 ```
+
+Please note that the actual number of pixels is defined using a `lidl:Expression`.
