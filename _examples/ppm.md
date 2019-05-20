@@ -15,7 +15,7 @@ Thus, it is one of the simplest formats.
 The basic layout of a PPM files is divided into a Header section and a ImageData section.
  
 ```
-@prefix lidl: <http://www.dfki.org/lidl#> .
+@prefix lidl: <https://linkeddatalayouts.github.io/vocabularies/lidl.ttl#> .
 @prefix ppm:	<http://ppm.example.com/ns#> .
 
 ppm:ImageLayout
@@ -42,7 +42,7 @@ The next two Header elements give the image width and the image height.
 The final Header element specifies the maximum value for each color.
 
 ```
-@prefix lidl: <http://www.dfki.org/lidl#> .
+@prefix lidl: <https://linkeddatalayouts.github.io/vocabularies/lidl.ttl#> .
 @prefix ppm:    <http://ppm.example.com/ns#> .
 
 ppm:HeaderLayout
@@ -51,7 +51,7 @@ ppm:HeaderLayout
 ppm:Magic
   lidl:order 0 ;
   lidl:count 2 ;
-  lidl:layout lidl:ASCII .
+  lidl:layout lidl:ASCII ;
   lidl:value "P6" .
 
 ppm:Width
@@ -77,7 +77,7 @@ The ImageData section contains the actual picture information as a series of RGB
 In the PPM format, each pixel is defined by a triplet of values representing how much red, green, and blue (RGB) are present. 
 
 ```
-@prefix lidl: <http://www.dfki.org/lidl#> .
+@prefix lidl: <https://linkeddatalayouts.github.io/vocabularies/lidl.ttl#> .
 @prefix ppm:	<http://ppm.example.com/ns#> .
 
 ppm:ImageDataLayout
