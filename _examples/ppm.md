@@ -19,7 +19,7 @@ The basic layout of a PPM files is divided into a Header section and a ImageData
 @prefix ppm:	<http://ppm.example.com/ns#> .
 
 ppm:ImageLayout
-  lidl:endianess lidl:LittleEndian ;
+  lidl:endianness lidl:LittleEndian ;
   lidl:attribute ppm:Header , ppm:ImageData .
 
 ppm:Header
