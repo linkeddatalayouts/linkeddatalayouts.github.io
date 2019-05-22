@@ -2,9 +2,9 @@ main:
   - title: "Start"
     url: /
     description: "Home"
-  - title: "Layouts"       
-    url: /layouts/
-    description: "Layouts"
+  - title: "Concept"       
+    url: /concept/
+    description: "Concept"
   - title: "Mappings"       
     url: /mappings/
     description: "Mappings"
