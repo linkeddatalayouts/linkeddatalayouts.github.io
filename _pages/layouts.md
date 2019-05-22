@@ -12,8 +12,6 @@ The LiDL Layout Defintion Language allows to define structure, rules and express
 
 Every (binary) application format specification is based on the notion of a `lidl:Layout` that MAY define the endianess with which its content is to be interpreted. 
 
-Each user-defined `lidl:Layout` instance MUST successfully validate against the following [SHACL shape](https://www.w3.org/TR/shacl/).
-
 ```
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix lidl: <http://www.dfki.org/lidl#> .
@@ -27,6 +25,7 @@ lidl:Layout
     sh:in ( lidl:BigEndian lidl:MiddleEndian lidl:LittleEndian )
   ] .
 ```
+*Each user-defined `lidl:Layout` instance MUST successfully validate against the following [SHACL shape](https://www.w3.org/TR/shacl/).*
 
 We further distinguish between `lidl:Composite` layouts, and `lidl:Atomic` layouts.
 
