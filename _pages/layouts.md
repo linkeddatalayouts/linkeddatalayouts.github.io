@@ -138,7 +138,7 @@ lidl:UTF32
   lidl:datatype xsd:string .
 ```  
   
-Each user-defined `lidl:Atomic` instance MUST successfully validate against the above [SHACL shape](https://www.w3.org/TR/shacl/).
+Each user-defined `lidl:Atomic` instance MUST successfully validate against the following [SHACL shape](https://www.w3.org/TR/shacl/).
 {: .notice--warning}
 
 ```
@@ -222,7 +222,7 @@ string:NullTerminatedASCII
 ```
 
 
-Each user-defined `lidl:Attribute` instance MUST successfully validate against the above [SHACL shape](https://www.w3.org/TR/shacl/).
+Each user-defined `lidl:Attribute` instance MUST successfully validate against the following [SHACL shape](https://www.w3.org/TR/shacl/).
 {: .notice--warning}
 
 ```
