@@ -39,7 +39,7 @@ lidl:Layout
 
 A `lidl:Composite` layout is made up of several parts or sub-elements, that we refer to as `lidl:Attributes`. 
 
-For example, a simple RGB pixel can be described as follows.
+For example, a simple RGB pixel layout can be described as follows.
 
 ```
 @prefix lidl: <https://linkeddatalayouts.github.io/vocabularies/lidl.ttl#> .
@@ -90,41 +90,6 @@ In contrast to `lidl:Composite` layouts, a `lidl:Atomic` layout does further not
 
 Instead it provides an explicit type conversion into an RDFS datatype and specifies its native size in number of bits or bytes.
 
-```
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix lidl: <https://linkeddatalayouts.github.io/vocabularies/lidl.ttl#> .
-
-lidl:Atomic
-  a sh:NodeShape ;
-  rdfs:subClassOf lidl:Layout ;
-  sh:property [
-    sh:message "Each Atomic layout MUST map to an RDFS datatype" ;
-    sh:path lidl:datatype ;
-    sh:minCount 1 ;
-    sh:maxCount 1
-  ] ;
-  sh:or (
-    [
-      sh:property [
-        sh:message "Each Atomic layout MUST specify its bitSize or byteSize." ;
-        sh:path lidl:bitSize ;
-        sh:minCount 1 ;
-        sh:datatype xsd:integer
-      ]
-    ]
-    [
-      sh:property [
-        sh:message "Each Atomic layout MUST specify its bitSize or byteSize." ;
-        sh:path lidl:byteSize ;
-        sh:minCount 1 ;
-        sh:datatype xsd:integer
-      ]
-    ]
-  ) .
-```
-*<sub>Each user-defined `lidl:Atomic` instance MUST successfully validate against the above [SHACL shape](https://www.w3.org/TR/shacl/).</sub>*
-
 We provide a number of predefined `lidl:Atomic` layouts, ranging from 
 
 ```
@@ -171,14 +136,94 @@ lidl:UTF32
   lidl:byteSize 3 ;
   lidl:bitSize 32 ;
   lidl:datatype xsd:string .
+```  
+  
+Each user-defined `lidl:Atomic` instance MUST successfully validate against the above [SHACL shape](https://www.w3.org/TR/shacl/).
+{: .notice--warning}
+
+```
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix lidl: <https://linkeddatalayouts.github.io/vocabularies/lidl.ttl#> .
+
+lidl:Atomic
+  a sh:NodeShape ;
+  rdfs:subClassOf lidl:Layout ;
+  sh:property [
+    sh:message "Each Atomic layout MUST map to an RDFS datatype" ;
+    sh:path lidl:datatype ;
+    sh:minCount 1 ;
+    sh:maxCount 1
+  ] ;
+  sh:or (
+    [
+      sh:property [
+        sh:message "Each Atomic layout MUST specify its bitSize or byteSize." ;
+        sh:path lidl:bitSize ;
+        sh:minCount 1 ;
+        sh:datatype xsd:integer
+      ]
+    ]
+    [
+      sh:property [
+        sh:message "Each Atomic layout MUST specify its bitSize or byteSize." ;
+        sh:path lidl:byteSize ;
+        sh:minCount 1 ;
+        sh:datatype xsd:integer
+      ]
+    ]
+  ) .
 ```
 
-Feel free to specify your own!
-{: .notice}
 
 ## `lidl:Attribute`
 
 A `lidl:Attribute` encapsulates a specific sub-element of a `lidl:Composite` layout.
+
+Each `lidl:Attribute` instance MUST define the `lidl:Layout` of the encapsulated element.
+
+Each `lidl:Attribute` instance SHOULD specify the sub-element's order and count with respect to its containing `lidl:Composite`.
+
+Coming back to our RGB pixel layout, we could choose to define the red, green, and blue color components using a single `lidl:Attribute`.
+
+```
+@prefix lidl: <https://linkeddatalayouts.github.io/vocabularies/lidl.ttl#> .
+@prefix img: <http://img.example.org/ns#> .
+
+img:RGBPixel
+  lidl:attribute [
+    lidl:order 0;
+    lidl:count 3 ;
+    lidl:layout lidl:UInt8
+  ] .
+```  
+
+If a `lidl:Attribute` instance does not specify the sub-element's count, a LiDL engine will continue to consume sub-elements of the specified layout until the next in order `lidl:Attribute` of the containing `lidl:Composite` layout is encountered.
+{: .notice--info}
+
+With this in mind, the specification of a [null-terminated ASCII string](/examples/null_terminated_strings/) layout becomes straight-forward:
+
+```
+@prefix lidl:   <http://www.dfki.org/lidl#> .
+@prefix string: <http://string.example.com/ns#> .
+
+string:NullTerminatedASCII
+  lidl:attribute [ 
+    # chars
+    lidl:order 0 ; 
+    lidl:layout lidl:ASCII 
+  ] , [ 
+    # terminator
+    lidl:order 1 ; 
+    lidl:count 1 ;
+    lidl:value "0"^^xsd:hexBinary 
+    lidl:layout lidl:Byte 
+  ] .
+```
+
+
+Each user-defined `lidl:Attribute` instance MUST successfully validate against the above [SHACL shape](https://www.w3.org/TR/shacl/).
+{: .notice--warning}
 
 ```
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -230,17 +275,6 @@ lidl:Attribute
     ]
   ) .
 ```
-*<sub>Each user-defined `lidl:Attribute` instance MUST successfully validate against the above [SHACL shape](https://www.w3.org/TR/shacl/).</sub>*
-
-Each `lidl:Attribute` instance MUST define the `lidl:Layout` of the encapsulated element.
-
-Each `lidl:Attribute` instance SHOULD specify the sub-element's order and count with respect to its containing `lidl:Composite`.
-
-If a `lidl:Attribute` instance does not specify the sub-element's count, a LiDL engine will continue to consume sub-elements of the specified layout until the next in order `lidl:Attribute` of the containing `lidl:Composite` layout is encountered.
-{: .notice--info}
-
-
-{: .notice--info}
 
 
 ## `lidl:Expression`
