@@ -4,7 +4,7 @@ layout: single
 author_profile: false
 ---
 
-## Defining the layout of null-terminated ASCII strings
+## Null-terminated ASCII string 
 
 ```
 @prefix lidl:   <http://www.dfki.org/lidl#> .
@@ -24,7 +24,7 @@ string:NullTerminatedASCII
   ] .
 ```
 
-## Defining the layout of null-terminated UTF-16 strings
+## Null-terminated UTF-16 string
 
 ```
 @prefix lidl:   <http://www.dfki.org/lidl#> .
@@ -44,7 +44,7 @@ string:NullTerminatedUTF16
   ] .
 ```
 
-## Defining the layout of null-terminated UTF-32 strings
+## Null-terminated UTF-32 string
 
 ```
 @prefix lidl:   <http://www.dfki.org/lidl#> .
@@ -64,7 +64,7 @@ string:NullTerminatedUTF32
   ] .
 ```
 
-## Defining the layout of null-terminated UTF-32 strings
+## Null-terminated UTF-8 string
 
 Jesus christ! 
 
