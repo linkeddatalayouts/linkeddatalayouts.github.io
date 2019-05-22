@@ -2,6 +2,12 @@ main:
   - title: "Start"
     url: /
     description: "Home"
+  - title: "Layouts"       
+    url: /layouts/
+    description: "Layouts"
+  - title: "Mappings"       
+    url: /mappings/
+    description: "Mappings"
   - title: "Examples"       
     url: /examples/
     description: "Examples"
