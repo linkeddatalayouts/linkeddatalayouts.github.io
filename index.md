@@ -14,4 +14,4 @@ With LiDL (Linked Data Layouts), we present a [generic concept](/specification),
 * the semantic description of the structural layout of arbitrary native application formats, and
 * the declarative mapping of user-defined content fragments of native application data to RDF.
 
-Our [reference implementation](https://github.com/linkeddatalayouts/interpreter) allows for executing a mapping definition given a native application file and its layout specification.
+Our [reference implementation](https://github.com/linkeddatalayouts/interpreter) allows for executing a `lidl:Mapping` definition given a native application file and its `lidl:Layout` specification.
