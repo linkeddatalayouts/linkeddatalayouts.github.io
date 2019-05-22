@@ -144,7 +144,8 @@ Feel free to specify your own!
 
 ## `lidl:Attribute`
 
-A `lidl:Attribute` encapsulates a specific sub-element of a `lidl:Composite` layout and allows to specify the sub-element's order and multiplicity with respect to its containing `lidl:Composite`. 
+A `lidl:Attribute` encapsulates a specific sub-element of a `lidl:Composite` layout.
+Each `lidl:Attribute` instance MUST define the `lidl:Layout` of the encapsulated element, and it SHOULD specify the sub-element's order and count with respect to its containing `lidl:Composite`.
 
 ```
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -163,12 +164,19 @@ lidl:Attribute
     sh:message "Each attribute MUST specify the layout of its (sub) elements." ;
     sh:path lidl:layout ;
     sh:minCount 1 ;
+    sh:maxCount 1 ;
     sh:or (
         [ sh:class lidl:Atomic ]
         [ sh:node lidl:Atomic ]
         [ sh:class lidl:Composite ]
         [ sh:node lidl:Composite ]
     )
+  ] ;
+  sh:property [
+    sh:message "Each attribute MAY specify the value of its (sub) element." ;
+    sh:path lidl:value ;
+    sh:maxCount 1 ;
+    sh:nodeKind sh:Literal ;
   ] ;
   sh:xone (
     [
@@ -190,3 +198,5 @@ lidl:Attribute
   ) .
 ```
 *<sub>Each user-defined `lidl:Attribute` instance MUST successfully validate against the above [SHACL shape](https://www.w3.org/TR/shacl/).</sub>*
+
+If a `lidl:Attribute` instance does not specify its `lidl:count`, a LiDL engine will consume an arbitrary number of specified {: .notice--info}
