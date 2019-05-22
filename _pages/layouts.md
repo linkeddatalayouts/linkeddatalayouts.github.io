@@ -180,9 +180,7 @@ lidl:Atomic
 
 A `lidl:Attribute` encapsulates a specific sub-element of a `lidl:Composite` layout.
 
-Each `lidl:Attribute` instance MUST define the `lidl:Layout` of the encapsulated element.
-
-Each `lidl:Attribute` instance SHOULD specify the sub-element's order and count with respect to its containing `lidl:Composite`.
+Each `lidl:Attribute` instance MUST define the `lidl:Layout` of the encapsulated element and the sub-element's order with respect to its containing `lidl:Composite`.
 
 Coming back to our RGB pixel layout, we could choose to define the red, green, and blue color components using a single `lidl:Attribute`.
 
@@ -197,6 +195,8 @@ img:RGBPixel
     lidl:layout lidl:UInt8
   ] .
 ```  
+
+Each `lidl:Attribute` instance SHOULD specify the sub-element's count with respect to its containing `lidl:Composite`.
 
 If a `lidl:Attribute` instance does not specify the sub-element's count, a LiDL engine will continue to consume sub-elements of the specified layout until the next in order `lidl:Attribute` of the containing `lidl:Composite` layout is encountered.
 {: .notice--info}
@@ -233,8 +233,9 @@ Each user-defined `lidl:Attribute` instance MUST successfully validate against t
 lidl:Attribute
   a sh:NodeShape ;
   sh:property [
-    sh:message "Each attribute SHOULD define its order in a layout." ;
+    sh:message "Each attribute MUST define its order in a layout." ;
     sh:path lidl:order ;
+    sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:datatype xsd:integer ;
   ] ;
