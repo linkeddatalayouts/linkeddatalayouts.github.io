@@ -55,7 +55,7 @@ lidl:Composite
 ### `lidl:Atomic`
 
 In contrast to `lidl:Composite` layouts, a `lidl:Atomic` layout does further not decompose. 
-Instead it provides an explicit type conversion into an RDFS datatype and its native size in number of bits or bytes.
+Instead it provides an explicit type conversion into an RDFS datatype and specifies its native size in number of bits or bytes.
 
 ```
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -199,4 +199,5 @@ lidl:Attribute
 ```
 *<sub>Each user-defined `lidl:Attribute` instance MUST successfully validate against the above [SHACL shape](https://www.w3.org/TR/shacl/).</sub>*
 
-If a `lidl:Attribute` instance does not specify its `lidl:count`, a LiDL engine will consume an arbitrary number of specified {: .notice--info}
+If a `lidl:Attribute` instance does not specify its `lidl:count`, a LiDL engine will consume an arbitrary number of specified 
+{: .notice--info}
