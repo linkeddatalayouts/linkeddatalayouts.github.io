@@ -25,7 +25,7 @@ lidl:Layout
     sh:in ( lidl:BigEndian lidl:MiddleEndian lidl:LittleEndian )
   ] .
 ```
-*Each user-defined `lidl:Layout` instance MUST successfully validate against the following [SHACL shape](https://www.w3.org/TR/shacl/).*
+*<sub>Each user-defined `lidl:Layout` instance MUST successfully validate against the following [SHACL shape](https://www.w3.org/TR/shacl/).</sub>*
 
 We further distinguish between `lidl:Composite` layouts, and `lidl:Atomic` layouts.
 
