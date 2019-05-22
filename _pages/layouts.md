@@ -13,6 +13,9 @@ The LiDL Layout Defintion Language allows to define structure, rules and express
 Every (binary) application format specification is based on the notion of a `lidl:Layout` that MAY define the endianess with which its content is to be interpreted. 
 
 ```
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix lidl: <http://www.dfki.org/lidl#> .
+
 lidl:Layout
   a sh:NodeShape ;
   sh:property [
@@ -28,6 +31,9 @@ We further distinguish between `lidl:Composite` layouts, and `lidl:Atomic` layou
 A `lidl:Composite` layout is made up of several parts or sub-elements, that we refer to as `lidl:Attributes`. 
 
 ```
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix lidl: <http://www.dfki.org/lidl#> .
+
 lidl:Composite
   a sh:NodeShape ;
   rdfs:subClassOf lidl:Layout ;
@@ -43,6 +49,10 @@ In contrast, a `lidl:Atomic` layout does further not decompose.
 Instead it provides an explicit type conversion into an RDFS datatype and its native size in number of bits or bytes.
 
 ```
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix lidl: <http://www.dfki.org/lidl#> .
+
 lidl:Atomic
   a sh:NodeShape ;
   rdfs:subClassOf lidl:Layout ;
@@ -77,6 +87,10 @@ lidl:Atomic
 A `lidl:Attribute` encapsulates a specific sub-element of a `lidl:Composite` layout and allows to specify the sub-element's order and multiplicity with respect to its containing `lidl:Composite`.
 
 ```
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix lidl: <http://www.dfki.org/lidl#> .
+
 lidl:Attribute
   a sh:NodeShape ;
   sh:property [
