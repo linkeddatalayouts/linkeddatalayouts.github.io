@@ -6,11 +6,14 @@ layout: single
 author_profile: false
 ---
 
-A considerable amount of data on the Web is stored in native application formats.
-Thus, such resources are not accessible for Linked Data applications.
+A considerable amount of data on the Web is stored in native application formats, e.g., [images](/examples/ppm), binary [TLV-encoded data](/examples/tlv), etc.
 
-While special purpose converters and meta data extractors from many native application formats to RDF exist, there is a lack of a more generic concept to perform these mappings.
+While there is a number of special purpose converters and meta data extractors for certain native application formats,
+such native resources are in general not accessible for Linked Data applications.
 
-With LiDL (Linked Data Layouts), we present such a generic concept, along with an RDF ontology, based on the constraint language SHACL to describe binary resource formats.
+With LiDL (Linked Data Layouts), we present a [generic concept](/specification), along with an [RDF vocabulary](/vocabularies), enabling 
 
-We present how binary resources can be lifted to a Linked Data representation by interpreting their structure according to its description given in a Linked Data Layout.
+- the semantic description of the structural layout of arbitrary native application formats, and
+- the declarative mapping of user-defined content fragments of native application data to RDF.
+
+Our [reference implementation](https://github.com/linkeddatalayouts/interpreter) allows for executing a mapping definition given a native application file and its layout specification.
