@@ -142,6 +142,7 @@ lidl:UTF32
 ```
 
 Feel free to specify your own!
+{: .notice}
 
 ## `lidl:Attribute`
 
@@ -151,7 +152,7 @@ Each `lidl:Attribute` instance MUST define the `lidl:Layout` of the encapsulated
 
 Each `lidl:Attribute` instance SHOULD specify the sub-element's order and count with respect to its containing `lidl:Composite`.
 
-If a `lidl:Attribute` instance does not specify the sub-element's order, a LiDL engine will continue to consume sub-elements of the specified layout until the next in order attribute of the containing `lidl:Composite` layout is matched.
+If a `lidl:Attribute` instance does not specify the sub-element's count, a LiDL engine will continue to consume sub-elements of the specified layout until the next in order `lidl:Attribute` of the containing `lidl:Composite` layout is encountered.
 {: .notice--info}
 
 ```
@@ -205,3 +206,5 @@ lidl:Attribute
   ) .
 ```
 *<sub>Each user-defined `lidl:Attribute` instance MUST successfully validate against the above [SHACL shape](https://www.w3.org/TR/shacl/).</sub>*
+
+## `lidl:Expression`
