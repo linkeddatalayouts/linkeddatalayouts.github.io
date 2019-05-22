@@ -204,7 +204,7 @@ If a `lidl:Attribute` instance does not specify the sub-element's count, a LiDL 
 With this in mind, the specification of a [null-terminated ASCII string](/examples/null_terminated_strings/) layout becomes straight-forward:
 
 ```
-@prefix lidl:   <http://www.dfki.org/lidl#> .
+@prefix lidl: <https://linkeddatalayouts.github.io/vocabularies/lidl.ttl#> .
 @prefix string: <http://string.example.com/ns#> .
 
 string:NullTerminatedASCII
@@ -278,3 +278,41 @@ lidl:Attribute
 
 
 ## `lidl:Expression`
+
+In many cases, a constant `lidl:Layout` specification is not capable of precisely addressing every defined Attribute within a specific binary blob instance.
+
+Obvious factors that cannot be captured in constant values are the length of a string value, as it is determined by which content the string would have in a distinct binary resource, or the element count in an array.
+
+LiDL covers these issues by simple mathematical and boolean expressions, conditional expressions, and pattern matching for type inference.
+
+```
+@prefix lidl: <https://linkeddatalayouts.github.io/vocabularies/lidl.ttl#> .
+@prefix img: <http://img.example.org/ns#> .
+
+img:RGBImage
+  lidl:endianness lidl:LittleEndian ;
+  lidl:attribute _:width , _:height , _:pixels .
+  
+_:width
+  lidl:order 0;
+  lidl:count 1 ;
+  lidl:layout lidl:Int32 .
+
+_:height
+  lidl:order 1;
+  lidl:count 1 ;
+  lidl:layout lidl:Int32 .
+
+_:pixels
+  lidl:predicate img:pixels ;
+  lidl:order 2 ;
+  lidl:count 1 ;
+  lidl:layout img:RGBPixelBuffer .
+  
+img:RGBPixelBuffer
+  lidl:attribute [
+      lidl:order 0 ;
+      lidl:count [ lidl:mul ( _:width _:height ) ] ;
+      lidl:layout img:RGBPixel
+  ] .
+```
