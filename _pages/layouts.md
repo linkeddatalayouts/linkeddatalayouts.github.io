@@ -89,6 +89,52 @@ lidl:Atomic
 ```
 *<sub>Each user-defined `lidl:Atomic` instance MUST successfully validate against the above [SHACL shape](https://www.w3.org/TR/shacl/).</sub>*
 
+We provide a range of predefined `lidl:Atomic` layouts, ranging from 
+
+```
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix lidl: <http://www.dfki.org/lidl#> .
+
+lidl:Bit
+  rdfs:label "A bit." ;
+  a lidl:Atomic ;
+  lidl:bitSize 1 ;
+  lidl:datatype xsd:Boolean .
+```
+
+over
+
+```
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix lidl: <http://www.dfki.org/lidl#> .
+
+lidl:Float32
+  rdfs:label "A 32-bit IEEE754 floating point number." ;
+  rdfs:isDefinedBy <https://ieeexplore.ieee.org/document/4610935> ;
+  rdfs:seeAlso <https://en.wikipedia.org/wiki/IEEE_754> ;
+  a lidl:Atomic ;
+  lidl:byteSize 4 ;
+  lidl:bitSize 32 ;
+  lidl:datatype xsd:float .
+```
+
+to 
+
+```
+lidl:UTF32
+  rdfs:label "An UTF-32 character." ;
+  rdfs:isDefinedBy <https://www.unicode.org/reports/tr19/tr19-9.html> ;
+  rdfs:seeAlso <https://en.wikipedia.org/wiki/UTF-32> ;
+  a lidl:Atomic ;
+  lidl:byteSize 3 ;
+  lidl:bitSize 32 ;
+  lidl:datatype xsd:string .
+```
+
+Feel free to specify your own!
+
 ## `lidl:Attribute`
 
 A `lidl:Attribute` encapsulates a specific sub-element of a `lidl:Composite` layout and allows to specify the sub-element's order and multiplicity with respect to its containing `lidl:Composite`. 
