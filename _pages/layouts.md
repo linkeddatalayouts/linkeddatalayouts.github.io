@@ -6,10 +6,112 @@ author_profile: false
 classes: wide
 ---
 
-The <span style="color:blue">`LiDL` Layout Defintion Language</span> allows to define structure, rules and expressions that map data in native application formats to the RDF data model.
+The LiDL Layout Defintion Language allows to define structure, rules and expressions that map data in native application formats to the RDF data model.
 
-# `LiDL:Layout`
+## `lidl:Layout`
 
+Every (binary) application format specification is based on the notion of a `lidl:Layout` that MAY define the endianess with which its content is to be interpreted. 
 
-# `LiDL:Attribute`
+```
+lidl:Layout
+  a sh:NodeShape ;
+  sh:property [
+    sh:message "Each layout MAY specify its endianness" ;
+    sh:path lidl:endianness ;
+    sh:maxCount 1 ;
+    sh:in ( lidl:BigEndian lidl:MiddleEndian lidl:LittleEndian )
+  ] .
+```
 
+We further distinguish between `lidl:Composite` layouts, and `lidl:Atomic` layouts.
+
+A `lidl:Composite` layout is made up of several parts or sub-elements, that we refer to as `lidl:Attributes`. 
+
+```
+lidl:Composite
+  a sh:NodeShape ;
+  rdfs:subClassOf lidl:Layout ;
+  sh:property [
+    sh:message "Each Composite layout MUST have some attributes" ;
+    sh:path lidl:attribute ;
+    sh:minCount 1 ;
+    sh:node lidl:Attribute
+  ] .
+```
+
+In contrast, a `lidl:Atomic` layout does further not decompose. 
+Instead it provides an explicit type conversion into an RDFS datatype and its native size in number of bits or bytes.
+
+```
+lidl:Atomic
+  a sh:NodeShape ;
+  rdfs:subClassOf lidl:Layout ;
+  sh:property [
+    sh:message "Each Atomic layout MUST map to an RDFS datatype" ;
+    sh:path lidl:datatype ;
+    sh:minCount 1 ;
+    sh:maxCount 1
+  ] ;
+  sh:or (
+    [
+      sh:property [
+        sh:message "Each Atomic layout MUST specify its bitSize or byteSize." ;
+        sh:path lidl:bitSize ;
+        sh:minCount 1 ;
+        sh:datatype xsd:integer
+      ]
+    ]
+    [
+      sh:property [
+        sh:message "Each Atomic layout MUST specify its bitSize or byteSize." ;
+        sh:path lidl:byteSize ;
+        sh:minCount 1 ;
+        sh:datatype xsd:integer
+      ]
+    ]
+  ) .
+```
+
+## `lidl:Attribute`
+
+A `lidl:Attribute` encapsulates a specific sub-element of a `lidl:Composite` layout and allows to specify the sub-element's order and multiplicity with respect to its containing `lidl:Composite`.
+
+```
+lidl:Attribute
+  a sh:NodeShape ;
+  sh:property [
+    sh:message "Each attribute SHOULD define its order in a layout." ;
+    sh:path lidl:order ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:integer ;
+  ] ;
+  sh:property [
+    sh:message "Each attribute MUST specify the layout of its (sub) elements." ;
+    sh:path lidl:layout ;
+    sh:minCount 1 ;
+    sh:or (
+        [ sh:class lidl:Atomic ]
+        [ sh:node lidl:Atomic ]
+        [ sh:class lidl:Composite ]
+        [ sh:node lidl:Composite ]
+    )
+  ] ;
+  sh:xone (
+    [
+      sh:property [
+        sh:message "Each attribute SHOULD specify the number of its (sub) elements." ;
+        sh:path lidl:count ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:integer ;
+      ]
+    ]
+    [
+      sh:property [
+        sh:message "Each attribute SHOULD specify the number of its (sub) elements." ;
+        sh:path lidl:count ;
+        sh:maxCount 1 ;
+        sh:node lidl:Expression ;
+      ]
+    ]
+  ) .
+```
