@@ -10,7 +10,7 @@ A considerable amount of data on the Web is stored in native application formats
 
 While there is a number of special purpose converters and meta data extractors for certain native application formats,  in general, native data resources are not accessible for Linked Data applications.
 
-With LiDL (Linked Data Layouts), we present a [generic concept](/specification), along side with an [RDF vocabulary](https://github.com/linkeddatalayouts/vocabularies), enabling 
+With LiDL (Linked Data Layouts), we present a [generic concept](/concept), along side with an [RDF vocabulary](https://github.com/linkeddatalayouts/vocabularies), enabling 
 * the semantic description of the structural layout of arbitrary native application formats, and
 * the declarative mapping of user-defined content fragments of native application data to RDF.
 

@@ -5,9 +5,6 @@ main:
   - title: "Concept"       
     url: /concept/
     description: "Concept"
-  - title: "Mappings"       
-    url: /mappings/
-    description: "Mappings"
   - title: "Examples"       
     url: /examples/
     description: "Examples"
