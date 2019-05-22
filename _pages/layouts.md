@@ -316,3 +316,68 @@ img:RGBPixelBuffer
       lidl:layout img:RGBPixel
   ] .
 ```
+
+
+
+Each user-defined `lidl:Expression` instance MUST successfully validate against the following [SHACL shape](https://www.w3.org/TR/shacl/).
+{: .notice--warning}
+
+```
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix lidl: <https://linkeddatalayouts.github.io/vocabularies/lidl.ttl#> .
+
+lidl:Expression
+  a sh:NodeShape ;
+  sh:property [
+    sh:path lidl:operator ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:node lidl:ArgumentList
+  ] .
+
+lidl:ArgumentList
+  a sh:NodeShape ;
+  sh:property [
+    sh:path [ sh:zeroOrMorePath rdf:rest ] ;
+    sh:hasValue rdf:nil ;
+    sh:node lidl:Argument
+  ] .
+
+lidl:Argument
+  a sh:NodeShape ;
+  sh:or (
+    [
+      sh:hasValue rdf:nil ;
+      sh:property [
+        sh:path rdf:first ;
+        sh:maxCount 0 ;
+      ] ;
+      sh:property [
+        sh:path rdf:rest ;
+        sh:maxCount 0 ;
+      ] ;
+    ]
+    [
+      sh:not [ sh:hasValue rdf:nil ] ;
+      sh:property [
+        sh:path rdf:first ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;
+        sh:or (
+          [ sh:nodeKind sh:Literal ]
+          [ sh:node lidl:Attribute ]
+          [ sh:node lidl:Expression ]
+        )
+      ] ;
+      sh:property [
+        sh:path rdf:rest ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;
+        sh:node lidl:ArgumentList
+      ] ;
+    ]
+  ) .
+
+```
