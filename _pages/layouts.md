@@ -1,12 +1,12 @@
 ---
 title: "LiDL Layout Definition Language"
-permalink: "/layouts/"
+permalink: "/concept/"
 layout: single
 author_profile: false
 classes: wide
 ---
 
-The LiDL Layout Defintion Language allows to define structure, rules and expressions that map data in native application formats to the RDF data model.
+The LiDL Layout Defintion Language allows to define structure, expressions and rules that map data in native application formats to the RDF data model.
 
 ![image-center](/assets/images/lidl.svg){: .align-center}
 
@@ -381,3 +381,6 @@ lidl:Argument
   ) .
 
 ```
+
+
+## `lidl:Mapping`
