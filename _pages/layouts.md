@@ -8,6 +8,12 @@ classes: wide
 
 The LiDL Layout Defintion Language allows to define structure, rules and expressions that map data in native application formats to the RDF data model.
 
+<figure class="half">
+    <a href="/images/lidl.svg"><img src="/lidl.svg"></a>
+    <figcaption>Caption describing these two images.</figcaption>
+</figure>
+
+
 ## `lidl:Layout`
 
 Every (binary) application format specification is based on the notion of a `lidl:Layout` that MAY define the endianess with which its content is to be interpreted. 
