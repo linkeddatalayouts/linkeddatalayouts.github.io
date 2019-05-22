@@ -89,7 +89,7 @@ lidl:Atomic
 ```
 *<sub>Each user-defined `lidl:Atomic` instance MUST successfully validate against the above [SHACL shape](https://www.w3.org/TR/shacl/).</sub>*
 
-We provide a range of predefined `lidl:Atomic` layouts, ranging from 
+We provide a number of predefined `lidl:Atomic` layouts, ranging from 
 
 ```
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -123,6 +123,10 @@ lidl:Float32
 to 
 
 ```
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix lidl: <http://www.dfki.org/lidl#> .
+
 lidl:UTF32
   rdfs:label "An UTF-32 character." ;
   rdfs:isDefinedBy <https://www.unicode.org/reports/tr19/tr19-9.html> ;
