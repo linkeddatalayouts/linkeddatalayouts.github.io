@@ -25,15 +25,13 @@ lidl:Layout
     sh:in ( lidl:BigEndian lidl:MiddleEndian lidl:LittleEndian )
   ] .
 ```
-*<sub>Each user-defined `lidl:Layout` instance MUST successfully validate against the following [SHACL shape](https://www.w3.org/TR/shacl/).</sub>*
+*<sub>Each user-defined `lidl:Layout` instance MUST successfully validate against the above [SHACL shape](https://www.w3.org/TR/shacl/).</sub>*
 
 We further distinguish between `lidl:Composite` layouts, and `lidl:Atomic` layouts.
 
 ### `lidl:Composite`
 
 A `lidl:Composite` layout is made up of several parts or sub-elements, that we refer to as `lidl:Attributes`. 
-
-Each user-defined `lidl:Composite` instance MUST successfully validate against the following [SHACL shape](https://www.w3.org/TR/shacl/).
 
 ```
 @prefix sh: <http://www.w3.org/ns/shacl#> .
@@ -49,13 +47,12 @@ lidl:Composite
     sh:node lidl:Attribute
   ] .
 ```
+*<sub>Each user-defined `lidl:Composite` instance MUST successfully validate against the above [SHACL shape](https://www.w3.org/TR/shacl/).</sub>*
 
 ### `lidl:Atomic`
 
 In contrast to `lidl:Composite` layouts, a `lidl:Atomic` layout does further not decompose. 
 Instead it provides an explicit type conversion into an RDFS datatype and its native size in number of bits or bytes.
-
-Each user-defined `lidl:Atomic` instance MUST successfully validate against the following [SHACL shape](https://www.w3.org/TR/shacl/).
 
 ```
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -90,12 +87,11 @@ lidl:Atomic
     ]
   ) .
 ```
+*<sub>Each user-defined `lidl:Atomic` instance MUST successfully validate against the above [SHACL shape](https://www.w3.org/TR/shacl/).</sub>*
 
 ## `lidl:Attribute`
 
 A `lidl:Attribute` encapsulates a specific sub-element of a `lidl:Composite` layout and allows to specify the sub-element's order and multiplicity with respect to its containing `lidl:Composite`. 
-
-Each user-defined `lidl:Attribute` instance MUST successfully validate against the following [SHACL shape](https://www.w3.org/TR/shacl/).
 
 ```
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -140,3 +136,4 @@ lidl:Attribute
     ]
   ) .
 ```
+*<sub>Each user-defined `lidl:Attribute` instance MUST successfully validate against the above [SHACL shape](https://www.w3.org/TR/shacl/).</sub>*
