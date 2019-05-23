@@ -186,7 +186,7 @@ A `lidl:Attribute` encapsulates a specific sub-element of a `lidl:Composite` lay
 
 Each `lidl:Attribute` instance MUST define the `lidl:Layout` of the encapsulated element.
 
-Each `lidl:Attribute` instance SHOULD specify the sub-element's count with respect to its containing `lidl:Composite`.
+Each `lidl:Attribute` instance SHOULD specify the number of sub-elements contained within its `lidl:Composite` layout.
 
 Coming back to our RGB pixel layout, we could choose to define the red, green, and blue color components using a single `lidl:Attribute`.
 
