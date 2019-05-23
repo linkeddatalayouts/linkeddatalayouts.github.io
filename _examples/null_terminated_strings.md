@@ -2,6 +2,7 @@
 title: "Null-terminated strings"
 layout: single
 author_profile: false
+classes: wide
 ---
 
 ## Null-terminated ASCII string 

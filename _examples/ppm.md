@@ -2,6 +2,7 @@
 title: "PPM - Netpbm color image format"
 layout: single
 author_profile: false
+classes: wide
 ---
 
 The PPM, or Portable Pixmap, format was devised to be an intermediate format for use in developing file format conversion systems.

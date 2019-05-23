@@ -2,6 +2,7 @@
 title: "Tag Length Value encoding scheme"
 layout: single
 author_profile: false
+classes: wide
 ---
 
 TLV (type-length-value or tag-length-value) is an encoding scheme used for optional information element in a certain protocol.
