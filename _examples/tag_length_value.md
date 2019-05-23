@@ -16,10 +16,7 @@ Each TLV representation is a finite `tlv:Sequence` of arbitrary length consistin
 @prefix lidl:   <http://www.dfki.org/lidl#> .
 @prefix tlv: <http://tlv.example.com/ns#> .
 
-tlv:Sequence
-  lidl:attribute [
-    lidl:layout tlv:Chunk .
-  ]
+tlv:Sequence lidl:attribute [ lidl:layout tlv:Chunk ] .
 ```
 
 ## TLV Chunks
@@ -33,8 +30,7 @@ Each `tlv:Chunk` consists of
 @prefix lidl:   <http://www.dfki.org/lidl#> .
 @prefix tlv: <http://tlv.example.com/ns#> .
 
-tlv:Chunk
-  lidl:attribute ( _:tag _:length _:value ) .
+tlv:Chunk lidl:attribute ( _:tag _:length _:value ) .
   
 _:tag
   lidl:count 1 ;
