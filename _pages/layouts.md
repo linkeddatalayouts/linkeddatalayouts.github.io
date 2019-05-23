@@ -81,10 +81,9 @@ lidl:Composite
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:xone (
-        [ sh:node lidl:Attribute ]
-        [ sh:node lidl:AttributeList ]
-    )
-  ] .
+      [ sh:node lidl:Attribute ]
+      [ sh:node lidl:AttributeList ]
+    ) .
 ```
 
 
@@ -159,24 +158,15 @@ lidl:Atomic
     sh:minCount 1 ;
     sh:maxCount 1
   ] ;
-  sh:or (
-    [
-      sh:property [
-        sh:message "Each Atomic layout MUST specify its bitSize or byteSize." ;
-        sh:path lidl:bitSize ;
-        sh:minCount 1 ;
-        sh:datatype xsd:integer
-      ]
-    ]
-    [
-      sh:property [
-        sh:message "Each Atomic layout MUST specify its bitSize or byteSize." ;
-        sh:path lidl:byteSize ;
-        sh:minCount 1 ;
-        sh:datatype xsd:integer
-      ]
-    ]
-  ) .
+  sh:property [
+    sh:message "Each Atomic layout MUST specify its bitSize or byteSize." ;
+    sh:or (
+      [ sh:path lidl:bitSize ]
+      [ sh:path lidl:byteSize ]
+    ) ;
+    sh:minCount 1 ;
+    sh:datatype xsd:integer
+  ] .
 ```
 
 
@@ -238,37 +228,28 @@ lidl:Attribute
     sh:path lidl:layout ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
-    sh:or (
-        [ sh:class lidl:Atomic ]
-        [ sh:node lidl:Atomic ]
-        [ sh:class lidl:Composite ]
-        [ sh:node lidl:Composite ]
-    )
+    sh:or ( 
+        [ sh:class lidl:Atomic ] 
+        [ sh:node lidl:Atomic ] 
+        [ sh:class lidl:Composite ] 
+        [ sh:node lidl:Composite ] 
+    ) 
   ] ;
   sh:property [
-    sh:message "Each attribute MAY specify the value of its (sub) element." ;
+    sh:message "Each attribute SHOULD specify the number of its (sub) elements." ;
+    sh:path lidl:count ;
+    sh:maxCount 1 ;
+    sh:xone (
+      [ sh:datatype xsd:integer ]
+      [ sh:node lidl:Expression ]
+    )           
+  ] ;
+  sh:property [
+    sh:message "Each attribute MAY specify a constant value for its (sub) element(s)." ;
     sh:path lidl:value ;
     sh:maxCount 1 ;
-    sh:nodeKind sh:Literal ;
-  ] ;
-  sh:xone (
-    [
-      sh:property [
-        sh:message "Each attribute SHOULD specify the number of its (sub) elements." ;
-        sh:path lidl:count ;
-        sh:maxCount 1 ;
-        sh:datatype xsd:integer ;
-      ]
-    ]
-    [
-      sh:property [
-        sh:message "Each attribute SHOULD specify the number of its (sub) elements." ;
-        sh:path lidl:count ;
-        sh:maxCount 1 ;
-        sh:node lidl:Expression ;
-      ]
-    ]
-  ) .
+    sh:nodeKind sh:Literal 
+  ] .
 ```
 
 
