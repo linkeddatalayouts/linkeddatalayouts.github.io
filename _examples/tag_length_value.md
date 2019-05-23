@@ -18,7 +18,6 @@ Each TLV representation is a finite `tlv:Sequence` of arbitrary length consistin
 
 tlv:Sequence
   lidl:attribute [
-    lidl:order 0;
     lidl:layout tlv:Chunk .
   ]
 ```
@@ -35,20 +34,17 @@ Each `tlv:Chunk` consists of
 @prefix tlv: <http://tlv.example.com/ns#> .
 
 tlv:Chunk
-  lidl:attribute _:tag , _:length , _:value .
+  lidl:attribute ( _:tag _:length _:value ) .
   
 _:tag
-  lidl:order 0;
   lidl:count 1 ;
   lidl:layout lidl:Byte .
   
 _:length
-  lidl:order 1;
   lidl:count 1 ;
   lidl:layout lidl:Integer32 .
   
 _:value
-  lidl:order 2;
   lidl:count [ lidl:eval ( _:length ) ] ;
   lidl:layout lidl:Byte . 
 ```

@@ -20,15 +20,13 @@ The basic layout of a PPM files is divided into a Header section and a ImageData
 
 ppm:ImageLayout
   lidl:endianness lidl:LittleEndian ;
-  lidl:attribute ppm:Header , ppm:ImageData .
+  lidl:attribute ( ppm:Header ppm:ImageData ) .
 
 ppm:Header
-    lidl:order 0 ;
     lidl:count 1 ;
     lidl:layout ppm:HeaderLayout .
 
 ppm:ImageData .
-  lidl:order 1;
   lidl:count 1 ;
   lidl:layout ppm:ImageDataLayout .
 ```
@@ -46,26 +44,22 @@ The final Header element specifies the maximum value for each color.
 @prefix ppm:    <http://ppm.example.com/ns#> .
 
 ppm:HeaderLayout
-  lidl:attribute ppm:Magic , ppm:Width , ppm:Height , ppm:MaxColorValue .
+  lidl:attribute ( ppm:Magic ppm:Width ppm:Height ppm:MaxColorValue ) .
 
 ppm:Magic
-  lidl:order 0 ;
   lidl:count 2 ;
   lidl:layout lidl:ASCII ;
   lidl:value "P6" .
 
 ppm:Width
-  lidl:order 1 ; 
   lidl:count 1 ;
   lidl:layout lidl:UInt32 .
 
 ppm:Height
-  lidl:order 2 ; 
   lidl:count 1 ;
   lidl:layout lidl:UInt32 .
 
 ppm:MaxColorValue
-  lidl:order 3 ; 
   lidl:count 1 ;
   lidl:layout lidl:UInt8 .
 ```
@@ -82,14 +76,12 @@ In the PPM format, each pixel is defined by a triplet of values representing how
 
 ppm:ImageDataLayout
   lidl:attribute [
-      lidl:order 0 ;
       lidl:count [ lidl:mul ( ppm:Width ppm:Height ) ] ;
       lidl:layout ppm:Pixel 
   ] .
 
 ppm:Pixel
   lidl:attribute [
-    lidl:order 0;
     lidl:count 3 ;
     lidl:layout lidl:UInt8  
   ] .
