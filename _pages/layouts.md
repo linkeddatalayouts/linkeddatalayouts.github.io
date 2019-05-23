@@ -39,7 +39,7 @@ lidl:Layout
 
 A `lidl:Composite` layout is made up of an ordered list of several parts or sub-elements, that we refer to as `lidl:Attributes`. 
 
-For example, a simple RGB pixel layout can be described as follows.
+For example, a simple RGB pixel layout can be described as follows. We will flesh out this simple example a bit later.
 
 ```
 @prefix lidl: <https://linkeddatalayouts.github.io/vocabularies/lidl.ttl#> .
@@ -48,21 +48,6 @@ For example, a simple RGB pixel layout can be described as follows.
 img:RGBPixel
   a lidl:Composite ;
   lidl:attribute ( _:red _:green _:blue ) .
-  
-_:red  
-  a lidl:Attribute ;
-  lidl:count 1 ;
-  lidl:layout lidl:UInt8 .
-
-_:green
-  a lidl:Attribute ;
-  lidl:count 1 ;
-  lidl:layout lidl:UInt8 .
-  
-_:blue
-  a lidl:Attribute ;
-  lidl:count 1 ;
-  lidl:layout lidl:UInt8 .
 ```
 
 Each user-defined `lidl:Composite` instance MUST successfully validate against the following [SHACL shape](https://www.w3.org/TR/shacl/).
@@ -178,7 +163,33 @@ Each `lidl:Attribute` instance MUST define the `lidl:Layout` of the encapsulated
 
 Each `lidl:Attribute` instance SHOULD specify the number of sub-elements contained within its `lidl:Composite` layout.
 
-Coming back to our RGB pixel layout, we could choose to define the red, green, and blue color components using a single `lidl:Attribute`.
+Coming back to our RGB pixel layout, we could choose to define the red, green, and blue color components using a `lidl:Attribute` for each color component.
+
+```
+@prefix lidl: <https://linkeddatalayouts.github.io/vocabularies/lidl.ttl#> .
+@prefix img: <http://img.example.org/ns#> .
+
+img:RGBPixel
+  a lidl:Composite ;
+  lidl:attribute ( _:red _:green _:blue ) .
+  
+_:red  
+  a lidl:Attribute ;
+  lidl:count 1 ;
+  lidl:layout lidl:UInt8 .
+
+_:green
+  a lidl:Attribute ;
+  lidl:count 1 ;
+  lidl:layout lidl:UInt8 .
+  
+_:blue
+  a lidl:Attribute ;
+  lidl:count 1 ;
+  lidl:layout lidl:UInt8 .
+```  
+
+Alternatively, all three color components could be modeled using a single `lidl:Attribute`. Eventually, it is up to your purposes.
 
 ```
 @prefix lidl: <https://linkeddatalayouts.github.io/vocabularies/lidl.ttl#> .
