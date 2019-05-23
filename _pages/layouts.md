@@ -50,14 +50,17 @@ img:RGBPixel
   lidl:attribute ( _:red _:green _:blue ) .
   
 _:red  
+  a lidl:Attribute ;
   lidl:count 1 ;
   lidl:layout lidl:UInt8 .
 
 _:green
+  a lidl:Attribute ;
   lidl:count 1 ;
   lidl:layout lidl:UInt8 .
   
 _:blue
+  a lidl:Attribute ;
   lidl:count 1 ;
   lidl:layout lidl:UInt8 .
 ```
@@ -190,7 +193,9 @@ Coming back to our RGB pixel layout, we could choose to define the red, green, a
 @prefix img: <http://img.example.org/ns#> .
 
 img:RGBPixel
+  a lidl:Composite ;
   lidl:attribute [
+    a lidl:Attribute ;
     lidl:count 3 ;
     lidl:layout lidl:UInt8
   ] .
