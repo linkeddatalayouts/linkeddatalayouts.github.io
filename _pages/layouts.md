@@ -37,7 +37,7 @@ lidl:Layout
 
 ### `lidl:Composite`
 
-A `lidl:Composite` layout is made up of several parts or sub-elements, that we refer to as `lidl:Attributes`. 
+A `lidl:Composite` layout is made up of an ordered list of several parts or sub-elements, that we refer to as `lidl:Attributes`. 
 
 For example, a simple RGB pixel layout can be described as follows.
 
@@ -47,20 +47,17 @@ For example, a simple RGB pixel layout can be described as follows.
 
 img:RGBPixel
   a lidl:Composite ;
-  lidl:attribute _:red , _:green , _:blue .
+  lidl:attribute ( _:red _:green _:blue ) .
   
 _:red  
-  lidl:order 0 ;
   lidl:count 1 ;
   lidl:layout lidl:UInt8 .
 
 _:green
-  lidl:order 1 ;
   lidl:count 1 ;
   lidl:layout lidl:UInt8 .
   
 _:blue
-  lidl:order 2 ;
   lidl:count 1 ;
   lidl:layout lidl:UInt8 .
 ```
@@ -76,10 +73,14 @@ lidl:Composite
   a sh:NodeShape ;
   rdfs:subClassOf lidl:Layout ;
   sh:property [
-    sh:message "Each Composite layout MUST have some attributes" ;
+    sh:message "Each Composite layout MUST have exactly one Attribute or an ordered AttributeList." ;
     sh:path lidl:attribute ;
     sh:minCount 1 ;
-    sh:node lidl:Attribute
+    sh:maxCount 1 ;
+    sh:xone (
+        [ sh:node lidl:Attribute ]
+        [ sh:node lidl:AttributeList ]
+    )
   ] .
 ```
 
@@ -190,7 +191,6 @@ Coming back to our RGB pixel layout, we could choose to define the red, green, a
 
 img:RGBPixel
   lidl:attribute [
-    lidl:order 0;
     lidl:count 3 ;
     lidl:layout lidl:UInt8
   ] .
@@ -208,17 +208,14 @@ With this in mind, the specification of a [null-terminated ASCII string](/exampl
 @prefix string: <http://string.example.com/ns#> .
 
 string:NullTerminatedASCII
-  lidl:attribute [ 
-    # chars
-    lidl:order 0 ; 
-    lidl:layout lidl:ASCII 
-  ] , [ 
-    # terminator
-    lidl:order 1 ; 
-    lidl:count 1 ;
-    lidl:value "0"^^xsd:hexBinary 
-    lidl:layout lidl:Byte 
-  ] .
+  lidl:attribute ( _:chars _:terminator ) .
+
+_:chars lidl:layout lidl:ASCII .
+
+_:terminator
+  lidl:count 1 ; 
+  lidl:value "0"^^xsd:hexBinary 
+  lidl:layout lidl:Byte .
 ```
 
 
@@ -232,13 +229,6 @@ Each user-defined `lidl:Attribute` instance MUST successfully validate against t
 
 lidl:Attribute
   a sh:NodeShape ;
-  sh:property [
-    sh:message "Each attribute MUST define its order in a layout." ;
-    sh:path lidl:order ;
-    sh:minCount 1 ;
-    sh:maxCount 1 ;
-    sh:datatype xsd:integer ;
-  ] ;
   sh:property [
     sh:message "Each attribute MUST specify the layout of its (sub) elements." ;
     sh:path lidl:layout ;
@@ -292,33 +282,26 @@ LiDL covers these issues by simple mathematical and boolean expressions, conditi
 
 img:RGBImage
   lidl:endianness lidl:LittleEndian ;
-  lidl:attribute _:width , _:height , _:pixels .
+  lidl:attribute ( _:width _:height _:pixels ) .
   
 _:width
-  lidl:order 0;
   lidl:count 1 ;
   lidl:layout lidl:Int32 .
 
 _:height
-  lidl:order 1;
   lidl:count 1 ;
   lidl:layout lidl:Int32 .
 
 _:pixels
-  lidl:predicate img:pixels ;
-  lidl:order 2 ;
   lidl:count 1 ;
   lidl:layout img:RGBPixelBuffer .
   
 img:RGBPixelBuffer
   lidl:attribute [
-      lidl:order 0 ;
       lidl:count [ lidl:mul ( _:width _:height ) ] ;
       lidl:layout img:RGBPixel
   ] .
 ```
-
-
 
 Each user-defined `lidl:Expression` instance MUST successfully validate against the following [SHACL shape](https://www.w3.org/TR/shacl/).
 {: .notice--warning}
