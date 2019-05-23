@@ -159,7 +159,7 @@ lidl:Atomic
 
 A `lidl:Attribute` encapsulates a specific sub-element of a `lidl:Composite` layout.
 
-Each `lidl:Attribute` instance MUST define the `lidl:Layout` of the encapsulated element.
+Each `lidl:Attribute` instance MUST define the admissable `lidl:Layout` alternatives for the encapsulated element.
 
 Each `lidl:Attribute` instance SHOULD specify the number of sub-elements contained within its `lidl:Composite` layout.
 
@@ -238,7 +238,6 @@ lidl:Attribute
     sh:message "Each attribute MUST specify the layout of its (sub) elements." ;
     sh:path lidl:layout ;
     sh:minCount 1 ;
-    sh:maxCount 1 ;
     sh:or ( 
         [ sh:class lidl:Atomic ] 
         [ sh:node lidl:Atomic ] 
