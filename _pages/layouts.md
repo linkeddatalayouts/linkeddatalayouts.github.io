@@ -116,14 +116,20 @@ to
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix lidl: <https://linkeddatalayouts.github.io/vocabularies/lidl.ttl#> .
 
-lidl:UTF32
-  rdfs:label "An UTF-32 character." ;
-  rdfs:isDefinedBy <https://www.unicode.org/reports/tr19/tr19-9.html> ;
-  rdfs:seeAlso <https://en.wikipedia.org/wiki/UTF-32> ;
+lidl:ASCII
+  rdfs:label "A printable ASCII character." ;
+  rdfs:isDefinedBy <https://doi.org/10.1145%2F366959.366961> ;
+  rdfs:seeAlso <https://en.wikipedia.org/wiki/ASCII> ;
   a lidl:Atomic ;
-  lidl:byteSize 3 ;
-  lidl:bitSize 32 ;
-  lidl:datatype xsd:string .
+  lidl:byteSize 1 ;
+  lidl:bitSize 8 ;
+  lidl:datatype [
+    owl:onDatatype xsd:string ;
+    owl:withRestrictions ( 
+      [ xsd:pattern "[x20-x7E]" ] 
+      [ xsd:length 1 ]
+    )
+  ] .
 ```  
   
 Each user-defined `lidl:Atomic` instance MUST successfully validate against the following [SHACL shape](https://www.w3.org/TR/shacl/).
@@ -131,6 +137,7 @@ Each user-defined `lidl:Atomic` instance MUST successfully validate against the 
 
 ```
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix lidl: <https://linkeddatalayouts.github.io/vocabularies/lidl.ttl#> .
 
@@ -141,7 +148,8 @@ lidl:Atomic
     sh:message "Each Atomic layout MUST map to an RDFS datatype" ;
     sh:path lidl:datatype ;
     sh:minCount 1 ;
-    sh:maxCount 1
+    sh:maxCount 1 ;
+    sh:class rdfs:Datatype
   ] ;
   sh:property [
     sh:message "Each Atomic layout MUST specify its bitSize or byteSize." ;
